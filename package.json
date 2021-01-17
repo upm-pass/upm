@@ -1,22 +1,30 @@
 {
   "name": "password-manager",
-  "main": "index.js",
+  "main": "main.js",
   "version": "1.0.0",
-  "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
+    "cross-env": "^7.0.3",
+    "electron-is-dev": "^1.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
   },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "electron": "^11.2.0",
+    "electron-builder": "^22.9.1",
+    "wait-on": "^5.2.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron-react": "concurrently \"SET BROWSER=none && npm start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {
     "extends": [
