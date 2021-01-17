@@ -57,7 +57,7 @@ class NewPassword extends Component {
                             placeholder="website name"
                             onChange={this.handleChange}
                         />
-                        {/* <br /><br /> */}<span style={{ padding: 5 }}></span>
+                        <span style={{ padding: 5 }}></span>
                         <input
                             id="Password"
                             type="password"
