@@ -1,0 +1,11 @@
+{
+  "name": "epm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "senpai-10",
+  "bin": {
+    "epm": "./index.js"
+  }
+}
