@@ -45,7 +45,7 @@ Welcome, to epm setup
         process.exit()
     }
 
-    if (args[0] == commands[0]) { // set config
+    if (args[0] == commands[0]) {
         console.log(`
 1. change password
         `)
@@ -67,22 +67,22 @@ Welcome, to epm setup
         }
     }
 
-    if (args[0] == commands[1]) { // ls list all passwords
+    if (args[0] == commands[1]) {
         console.log("ls command")
     }
 
-    if (args[0] == commands[2] && args[1]) { // add
+    if (args[0] == commands[2] && args[1]) {
         DomainName = args[1]
         password = await input.password(`password for ${DomainName}: `)
         config.set("passwords." + DomainName, password)
         console.log("\nPassword has been successfully saved.")
     }
 
-    if (args[0] == commands[3]) { // remove
+    if (args[0] == commands[3]) {
         console.log("remove command")
     }
 
-    if (args[0] == commands[4]) { // see
+    if (args[0] == commands[4]) {
         console.log("see command")
     }
 }
