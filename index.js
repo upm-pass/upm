@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('epm');
+const clicolor = require("cli-color")
+const editjsonfile = require("edit-json-file")
+const input = require("input")
+let config = editjsonfile("/home/senpai/epm.json")
 
 const [,, ...args] = process.argv
 
@@ -21,24 +23,27 @@ const options = {
     "see": ["-a", "--all"]
 }
 
-if (args[0] == commands[0]) { // set masterkey
-    console.log("set master key command")
+const app = async () => {
+    if (args[0] == commands[0]) { // set masterkey
+        console.log("set master key command")
+    }
+
+    if (args[0] == commands[1]) { // ls list all passwords
+        console.log("ls command")
+    }
+
+    if (args[0] == commands[2] && args[1]) { // add
+        password = await input.password(`password for ${args[1]}: `)
+        
+    }
+
+    if (args[0] == commands[3]) { // remove
+        console.log("remove command")
+    }
+
+    if (args[0] == commands[4]) { // see
+        console.log("see command")
+    }
 }
 
-if (args[0] == commands[1]) { // ls list all passwords
-    console.log("ls command")
-}
-
-if (args[0] == commands[2]) { // add
-    console.log("add command")
-}
-
-if (args[0] == commands[3]) { // remove
-    console.log("remove command")
-}
-
-if (args[0] == commands[4]) { // see
-    console.log("see command")
-}
-
-
+app()
