@@ -75,6 +75,7 @@ Welcome, to epm setup
         DomainName = args[1]
         password = await input.password(`password for ${DomainName}: `)
         config.set("passwords." + DomainName, password)
+        console.log("\nPassword has been successfully saved.")
     }
 
     if (args[0] == commands[3]) { // remove
