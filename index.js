@@ -110,8 +110,12 @@ Welcome, to epm setup
         console.log("\nPassword has been successfully saved.")
     }
 
-    if (args[0] == commands[3]) {
-        console.log("remove command")
+    if (args[0] == commands[3] && args[1]) {
+        if (args[1] == options.remove[0] || args[1] == options.remove[1]) {
+            config.unset("passwords")
+        } else {
+            config.unset("passwords."+args[1])
+        }
     }
 
     if (args[0] == 'help' || args[0] == '-h' || args[0] == '--help') {
