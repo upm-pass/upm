@@ -11,16 +11,14 @@ const commands = [
     'config',
     'ls',
     'add',
-    'remove',
-    'see'
+    'remove'
 ]
 
 const options = {
     "config": [""],
-    "ls": [""],
+    "ls": ["-a", "--all"],
     "add": [""],
-    "remove": ["-a", "--all"],
-    "see": ["-a", "--all"]
+    "remove": ["-a", "--all"]
 }
 
 const app = async () => {
@@ -47,7 +45,7 @@ Welcome, to epm setup
 
     if (args[0] == commands[0]) {
         console.log(`
-1. change password
+1. change master password
         `)
 
         choice = await input.text("choice: "); console.log('\n')
@@ -68,7 +66,33 @@ Welcome, to epm setup
     }
 
     if (args[0] == commands[1]) {
-        console.log("ls command")
+        console.log("\n")
+
+        if (args[1]) {
+            Masterkey = await input.password("Your masterkey password: ")
+
+            if (Masterkey == config.get("MasterKey")) {
+                console.log(`\nDomain\t\tpassword\n--------------------------------`);
+
+                if (args[1] == options.ls[0] || args[1] == options.ls[1]) {
+
+                    passwords = config.get("passwords")
+                    for (var key in passwords) {
+                        console.log(`${key}\t\t${passwords[key]}`);
+                    }
+                    
+                } else {
+                    console.log(`${args[1]}\t\t${config.get("passwords."+args[1])}`);
+                }
+
+            } else {
+                console.log("Wrong master key password!!");
+            }
+
+        } else {
+            console.log(`Domain name not provided!!`);
+        }
+
     }
 
     if (args[0] == commands[2] && args[1]) {
@@ -82,9 +106,6 @@ Welcome, to epm setup
         console.log("remove command")
     }
 
-    if (args[0] == commands[4]) {
-        console.log("see command")
-    }
 }
 
 app()
