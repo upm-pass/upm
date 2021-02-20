@@ -111,10 +111,16 @@ ${color.blueBright("Welcome")}, to epm setup
     }
 
     if (args[0] == commands[3] && args[1]) {
-        if (args[1] == options.remove[0] || args[1] == options.remove[1]) {
-            config.unset("passwords")
+        Masterkey = await input.password("Your masterkey password: ")
+
+        if (Masterkey == config.get("MasterKey")) {
+            if (args[1] == options.remove[0] || args[1] == options.remove[1]) {
+                config.unset("passwords")
+            } else {
+                config.unset("passwords."+args[1])
+            }
         } else {
-            config.unset("passwords."+args[1])
+            console.log(`${color.redBright("Wrong")} master key password!!`);
         }
     }
 
