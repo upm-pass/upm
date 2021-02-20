@@ -16,7 +16,7 @@ const commands = [
 
 const options = {
     "config": [""],
-    "ls": ["-a", "--all"],
+    "ls": ["-a", "--all", "-d", "--domain"],
     "add": [""],
     "remove": ["-a", "--all"]
 }
@@ -81,7 +81,15 @@ Welcome, to epm setup
                         console.log(`${key}\t\t${passwords[key]}`);
                     }
                     
-                } else {
+                } 
+                else if (args[1] == options.ls[2] || args[1] == options.ls[3]) {
+                    passwords = config.get("passwords")
+                    for (var key in passwords) {
+                        console.log(`${key}\t\t?`);
+                    }
+                }
+
+                else {
                     console.log(`${args[1]}\t\t${config.get("passwords."+args[1])}`);
                 }
 
@@ -104,6 +112,14 @@ Welcome, to epm setup
 
     if (args[0] == commands[3]) {
         console.log("remove command")
+    }
+
+    if (args[0] == 'help' || args[0] == '-h' || args[0] == '--help') {
+        console.log("commands: ");
+        for (var i in commands) {
+            optionName = commands[i]
+            console.log(`\t${commands[i]}\t\t${options[optionName]}`);
+        }
     }
 
 }
