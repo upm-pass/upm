@@ -84,8 +84,12 @@ ${color.blueBright("Welcome")}, to epm setup
                 } 
                 else if (args[1] == options.ls[2] || args[1] == options.ls[3]) {
                     passwords = config.get("passwords")
+
                     for (var key in passwords) {
-                        console.log(`${color.greenBright(key)}\t\t${color.blueBright("???")}`);
+                        let star = ""
+                        for (var i = 0; i < passwords[key].length; i++) star += "*"
+
+                        console.log(`${color.greenBright(key)}\t\t${color.blueBright(star)}`);
                     }
                 }
 
