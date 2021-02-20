@@ -21,6 +21,18 @@ const options = {
     "remove": ["-a", "--all"]
 }
 
+const generate = length => {
+    char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%*=';
+    var pass = '';
+    
+    for (var x = 0; x < length; x++) {
+        var i = Math.floor(Math.random() * char.length);
+        pass += char.charAt(i);
+    }
+
+    return pass
+}
+
 const app = async () => {
     if (!config.get("MasterKey")) {
         console.log(`
@@ -109,9 +121,24 @@ ${color.blueBright("Welcome")}, to epm setup
 
     if (args[0] == commands[2] && args[1]) {
         DomainName = args[1]
+        console.log(`Type genpass to generate random password.`)
         password = await input.password(`password for ${DomainName}: `)
-        config.set("passwords." + DomainName, password)
+
+        if (password == 'genpass') {
+            length = await input.text("password length (8+): ")
+
+            if (parseInt(length) > 8) {
+                config.set("passwords." + DomainName, generate(length))
+            } else {
+                console.log(`password is too ${color.redBright("weak")}`);
+            }
+
+        } else {
+            config.set("passwords." + DomainName, password)
+        }
+        
         console.log(`\nPassword has been ${color.greenBright("successfully")} saved.`)
+
     }
 
     if (args[0] == commands[3] && args[1]) {
