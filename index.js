@@ -3,7 +3,7 @@
 const color = require("cli-color")
 const editjsonfile = require("edit-json-file")
 const input = require("input")
-const bcrypt = require("bcrypt")
+const { encrypt, decrypt } = require('./lib/crpyto')
 let config = editjsonfile("/home/senpai/.epm.json", {autosave: true})
 
 const [,, ...args] = process.argv
@@ -49,12 +49,15 @@ ${color.blueBright("Welcome")}, to epm setup
         if (Masterkey != ReMasterkey) {
             console.log(`\nRetype - Master key ${color.redBright("does not match")} Master key password`)
         } else {
-            config.set("MasterKey", Masterkey)
+            const hash = encrypt(Masterkey)
+            config.set("MasterKey", hash)
             console.log("\nPassword has been successfully saved.");
         }
 
         process.exit()
     }
+
+    const MasterKey =  await decrypt(config.get("MasterKey")) 
 
     if (args[0] == commands[0]) {
         console.log(`
