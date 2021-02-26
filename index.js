@@ -3,7 +3,8 @@
 const color = require("cli-color")
 const editjsonfile = require("edit-json-file")
 const input = require("input")
-let config = editjsonfile("/home/senpai/epm.json", {autosave: true})
+const bcrypt = require("bcrypt")
+let config = editjsonfile("/home/senpai/.epm.json", {autosave: true})
 
 const [,, ...args] = process.argv
 
