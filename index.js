@@ -49,8 +49,7 @@ ${color.blueBright("Welcome")}, to epm setup
         if (Masterkey != ReMasterkey) {
             console.log(`\nRetype - Master key ${color.redBright("does not match")} Master key password`)
         } else {
-            const hash = encrypt(Masterkey)
-            config.set("MasterKey", hash)
+            config.set("MasterKey", encrypt(Masterkey))
             console.log("\nPassword has been successfully saved.");
         }
 
@@ -69,10 +68,10 @@ ${color.blueBright("Welcome")}, to epm setup
         if (choice == 1) {
             OldPass = await input.text("old master password: ")
 
-            if (OldPass === config.get("MasterKey")) {
+            if (OldPass === MasterKey) {
                 NewPass = await input.text("new master password: ")
-                
-                config.set("MasterKey", NewPass)
+
+                config.set("MasterKey", encrypt(NewPass))
                 console.log(`\nPassword has been ${color.greenBright("successfully")} saved.`)
             
             } else {
@@ -85,9 +84,9 @@ ${color.blueBright("Welcome")}, to epm setup
         console.log("\n")
 
         if (args[1]) {
-            Masterkey = await input.password("Your masterkey password: ")
+            master_key = await input.password("Your masterkey password: ")
 
-            if (Masterkey == config.get("MasterKey")) {
+            if (master_key == MasterKey) {
                 console.log(`\n${color.greenBright("Domain")}\t\t${color.blueBright("password")}\n--------------------------------`);
 
                 if (args[1] == options.ls[0] || args[1] == options.ls[1]) {
@@ -126,29 +125,22 @@ ${color.blueBright("Welcome")}, to epm setup
     if (args[0] == commands[2] && args[1]) {
         DomainName = args[1]
         console.log(`Type genpass to generate random password.`)
-        password = await input.password(`password for ${DomainName}: `)
+        // password = await input.password(`password for ${DomainName}: `)
 
-        if (password == 'genpass') {
-            length = await input.text("password length (8+): ")
+        
+        length = Math.floor(Math.random() * 18) + 9
 
-            if (parseInt(length) > 8) {
-                config.set("passwords." + DomainName, generate(length))
-            } else {
-                console.log(`password is too ${color.redBright("weak")}`);
-            }
+        config.set("passwords." + DomainName, encrypt(generate(length)))
 
-        } else {
-            config.set("passwords." + DomainName, password)
-        }
         
         console.log(`\nPassword has been ${color.greenBright("successfully")} saved.`)
 
     }
 
     if (args[0] == commands[3] && args[1]) {
-        Masterkey = await input.password("Your masterkey password: ")
+        master_key = await input.password("Your masterkey password: ")
 
-        if (Masterkey == config.get("MasterKey")) {
+        if (master_key == MasterKey) {
             if (args[1] == options.remove[0] || args[1] == options.remove[1]) {
                 config.unset("passwords")
             } else {
