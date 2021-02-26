@@ -58,7 +58,7 @@ ${color.blueBright("Welcome")}, to epm setup
 
     const MasterKey =  await decrypt(config.get("MasterKey")) 
 
-    if (args[0] == commands[0]) {
+    if (args[0] == commands[0]) { // config
         console.log(`
 1. change master password
         `)
@@ -80,8 +80,13 @@ ${color.blueBright("Welcome")}, to epm setup
         }
     }
 
-    if (args[0] == commands[1]) {
+    if (args[0] == commands[1]) { // ls
         console.log("\n")
+
+        if (!config.get("passwords."+args[1])) {
+            console.log(`${color.redBright("error")}: can't find ${color.redBright(args[1])}`)
+            process.exit()
+        }
 
         if (args[1]) {
             master_key = await input.password("Your masterkey password: ")
@@ -93,23 +98,24 @@ ${color.blueBright("Welcome")}, to epm setup
 
                     passwords = config.get("passwords")
                     for (var key in passwords) {
-                        console.log(`${color.greenBright(key)}\t\t${color.blueBright(passwords[key])}`);
+
+                        let unhash = decrypt(passwords[key])
+                        console.log(`${color.greenBright(key)}\t\t${color.blueBright(unhash)}`);
                     }
-                    
-                } 
+                }
                 else if (args[1] == options.ls[2] || args[1] == options.ls[3]) {
                     passwords = config.get("passwords")
 
                     for (var key in passwords) {
                         let star = ""
-                        for (var i = 0; i < passwords[key].length; i++) star += "*"
+                        for (var i = 0; i < decrypt(passwords[key]).length; i++) star += "*"
 
                         console.log(`${color.greenBright(key)}\t\t${color.blueBright(star)}`);
                     }
                 }
 
                 else {
-                    console.log(`${color.greenBright(args[1])}\t\t${color.blueBright(config.get("passwords."+args[1]))}`);
+                    console.log(`${color.greenBright(args[1])}\t\t${color.blueBright(decrypt(config.get("passwords."+args[1])))}`);
                 }
 
             } else {
@@ -122,22 +128,18 @@ ${color.blueBright("Welcome")}, to epm setup
 
     }
 
-    if (args[0] == commands[2] && args[1]) {
+    if (args[0] == commands[2] && args[1]) { // add
         DomainName = args[1]
-        console.log(`Type genpass to generate random password.`)
-        // password = await input.password(`password for ${DomainName}: `)
-
         
         length = Math.floor(Math.random() * 18) + 9
 
         config.set("passwords." + DomainName, encrypt(generate(length)))
-
         
         console.log(`\nPassword has been ${color.greenBright("successfully")} saved.`)
 
     }
 
-    if (args[0] == commands[3] && args[1]) {
+    if (args[0] == commands[3] && args[1]) { // remove
         master_key = await input.password("Your masterkey password: ")
 
         if (master_key == MasterKey) {
@@ -151,7 +153,7 @@ ${color.blueBright("Welcome")}, to epm setup
         }
     }
 
-    if (args[0] == 'help' || args[0] == '-h' || args[0] == '--help') {
+    if (args[0] == 'help' || args[0] == '-h' || args[0] == '--help') { // help
         console.log("commands: ");
         for (var i in commands) {
             optionName = commands[i]
