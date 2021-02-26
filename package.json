@@ -9,6 +9,7 @@
     "epm": "./index.js"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cli-color": "^2.0.0",
     "edit-json-file": "^1.5.0",
     "input": "^1.0.1"
