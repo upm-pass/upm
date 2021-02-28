@@ -83,11 +83,6 @@ ${color.blueBright("Welcome")}, to epm setup
     if (args[0] == commands[1]) { // ls
         console.log("\n")
 
-        if (!config.get("passwords."+args[1])) {
-            console.log(`${color.redBright("error")}: can't find ${color.redBright(args[1])}`)
-            process.exit()
-        }
-
         if (args[1]) {
             master_key = await input.password("Your masterkey password: ")
 
@@ -102,8 +97,7 @@ ${color.blueBright("Welcome")}, to epm setup
                         let unhash = decrypt(passwords[key])
                         console.log(`${color.greenBright(key)}\t\t${color.blueBright(unhash)}`);
                     }
-                }
-                else if (args[1] == options.ls[2] || args[1] == options.ls[3]) {
+                } else if (args[1] == options.ls[2] || args[1] == options.ls[3]) {
                     passwords = config.get("passwords")
 
                     for (var key in passwords) {
@@ -112,6 +106,8 @@ ${color.blueBright("Welcome")}, to epm setup
 
                         console.log(`${color.greenBright(key)}\t\t${color.blueBright(star)}`);
                     }
+                } else if (!config.get("passwords."+args[1])) {
+                    console.log(`\n${color.redBright("error")}: can't find ${color.redBright(args[1])}\n`)
                 }
 
                 else {
@@ -130,13 +126,15 @@ ${color.blueBright("Welcome")}, to epm setup
 
     if (args[0] == commands[2] && args[1]) { // add
         DomainName = args[1]
-        
-        length = Math.floor(Math.random() * 18) + 9
 
-        config.set("passwords." + DomainName, encrypt(generate(length)))
-        
+        if (args[2]) {
+            config.set("passwords." + DomainName, encrypt(args[2]))
+        } else {
+            length = Math.floor(Math.random() * 18) + 9
+            config.set("passwords." + DomainName, encrypt(generate(length)))        
+        }
+
         console.log(`\nPassword has been ${color.greenBright("successfully")} saved.`)
-
     }
 
     if (args[0] == commands[3] && args[1]) { // remove
