@@ -151,8 +151,8 @@ ${color.blueBright("Welcome")}, to epm setup
         }
     }
 
-    if (args[0] == 'help' || args[0] == '-h' || args[0] == '--help') { // help
-        console.log("commands: ");
+    if (args[0] == 'help' || args[0] == '-h' || args[0] == '--help' || !args[0]) { // help
+        console.log("commands: ")
         for (var i in commands) {
             optionName = commands[i]
             console.log(`\t${commands[i]}\t\t${options[optionName]}`);
