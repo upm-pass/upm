@@ -4,40 +4,23 @@ const color = require("cli-color")
 const editjsonfile = require("edit-json-file")
 const input = require("input")
 const { encrypt, decrypt } = require('./lib/crpyto')
+const { commands, options } = require("./lib/settings")
 let config = editjsonfile("/home/senpai/.epm.json", {autosave: true})
+
+// import commands
+const Config = require("./lib/commands/config")
+const ls     = require("./lib/commands/ls")
+const add    = require("./lib/commands/add")
+const remove = require("./lib/commands/remove")
+const help   = require("./lib/commands/help") 
 
 const [,, ...args] = process.argv
 
-const commands = [
-    'config',
-    'ls',
-    'add',
-    'remove'
-]
-
-const options = {
-    "config": [""],
-    "ls": ["-a", "--all", "-d", "--domain"],
-    "add": [""],
-    "remove": ["-a", "--all"]
-}
-
-const generate = length => {
-    char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%*=';
-    var pass = '';
-    
-    for (var x = 0; x < length; x++) {
-        var i = Math.floor(Math.random() * char.length);
-        pass += char.charAt(i);
-    }
-
-    return pass
-}
 
 const app = async () => {
     if (!config.get("MasterKey")) {
         console.log(`
-${color.blueBright("Welcome")}, to epm setup 
+${color.blueBright("Welcome")}, to epm setup
  You need to give me a master key
   To see, edit, remove passwords.
 
@@ -56,108 +39,11 @@ ${color.blueBright("Welcome")}, to epm setup
         process.exit()
     }
 
-    const MasterKey =  await decrypt(config.get("MasterKey")) 
-
-    if (args[0] == commands[0]) { // config
-        console.log(`
-1. change master password
-        `)
-
-        choice = await input.text("choice: "); console.log('\n')
-        
-        if (choice == 1) {
-            OldPass = await input.text("old master password: ")
-
-            if (OldPass === MasterKey) {
-                NewPass = await input.text("new master password: ")
-
-                config.set("MasterKey", encrypt(NewPass))
-                console.log(`\nPassword has been ${color.greenBright("successfully")} saved.`)
-            
-            } else {
-                console.log(`\nold password is ${color.redBright("wrong")}\n`)
-            }
-        }
-    }
-
-    if (args[0] == commands[1]) { // ls
-        console.log("\n")
-
-        if (args[1]) {
-            master_key = await input.password("Your masterkey password: ")
-
-            if (master_key == MasterKey) {
-                console.log(`\n${color.greenBright("Domain")}\t\t${color.blueBright("password")}\n--------------------------------`);
-
-                if (args[1] == options.ls[0] || args[1] == options.ls[1]) {
-
-                    passwords = config.get("passwords")
-                    for (var key in passwords) {
-
-                        let unhash = decrypt(passwords[key])
-                        console.log(`${color.greenBright(key)}\t\t${color.blueBright(unhash)}`);
-                    }
-                } else if (args[1] == options.ls[2] || args[1] == options.ls[3]) {
-                    passwords = config.get("passwords")
-
-                    for (var key in passwords) {
-                        let star = ""
-                        for (var i = 0; i < decrypt(passwords[key]).length; i++) star += "*"
-
-                        console.log(`${color.greenBright(key)}\t\t${color.blueBright(star)}`);
-                    }
-                } else if (!config.get("passwords."+args[1])) {
-                    console.log(`\n${color.redBright("error")}: can't find ${color.redBright(args[1])}\n`)
-                }
-
-                else {
-                    console.log(`${color.greenBright(args[1])}\t\t${color.blueBright(decrypt(config.get("passwords."+args[1])))}`);
-                }
-
-            } else {
-                console.log(`${color.redBright("Wrong")} master key password!!`);
-            }
-
-        } else {
-            console.log(`Domain name ${color.redBright("not provided")}!!`);
-        }
-
-    }
-
-    if (args[0] == commands[2] && args[1]) { // add
-        DomainName = args[1]
-
-        if (args[2]) {
-            config.set("passwords." + DomainName, encrypt(args[2]))
-        } else {
-            length = Math.floor(Math.random() * 18) + 9
-            config.set("passwords." + DomainName, encrypt(generate(length)))        
-        }
-
-        console.log(`\nPassword has been ${color.greenBright("successfully")} saved.`)
-    }
-
-    if (args[0] == commands[3] && args[1]) { // remove
-        master_key = await input.password("Your masterkey password: ")
-
-        if (master_key == MasterKey) {
-            if (args[1] == options.remove[0] || args[1] == options.remove[1]) {
-                config.unset("passwords")
-            } else {
-                config.unset("passwords."+args[1])
-            }
-        } else {
-            console.log(`${color.redBright("Wrong")} master key password!!`);
-        }
-    }
-
-    if (args[0] == 'help' || args[0] == '-h' || args[0] == '--help' || !args[0]) { // help
-        console.log("commands: ")
-        for (var i in commands) {
-            optionName = commands[i]
-            console.log(`\t${commands[i]}\t\t${options[optionName]}`);
-        }
-    }
+    Config(args)
+    ls(args)
+    add(args)
+    remove(args)
+    help(args)
 
 }
 
