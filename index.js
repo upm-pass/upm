@@ -40,12 +40,12 @@ ${color.blueBright("Welcome")}, to epm setup
         process.exit()
     }
 
-    Config(args)
-    ls(args)
-    add(args)
-    remove(args)
-    backup(args)
-    help(args)
+    Config(args) // config  command
+    ls(args)     // ls      command
+    add(args)    // add     command
+    remove(args) // remove  command
+    backup(args) // backup  command
+    help(args)   // help    command
 
 }
 
