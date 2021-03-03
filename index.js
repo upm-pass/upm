@@ -5,7 +5,7 @@ const editjsonfile = require("edit-json-file")
 const input = require("input")
 const { encrypt, decrypt } = require('./lib/crpyto')
 const { commands, options } = require("./lib/settings")
-let config = editjsonfile("/home/senpai/.epm.json", {autosave: true})
+let config = editjsonfile(`/home/${require("os").userInfo().username}/.epm.json`, {autosave: true})
 
 // import commands
 const Config = require("./lib/commands/config")
