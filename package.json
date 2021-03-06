@@ -13,6 +13,8 @@
     "cli-color": "^2.0.0",
     "crypto": "^1.0.1",
     "edit-json-file": "^1.5.0",
-    "input": "^1.0.1"
+    "input": "^1.0.1",
+    "node-cmd": "^4.0.0",
+    "table": "^6.0.7"
   }
 }
