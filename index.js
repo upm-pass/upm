@@ -1,5 +1,15 @@
 #!/usr/bin/env node
 
+/* TODO
+
+change command
+- change (Username, 
+          Email, 
+          Password)
+
+*/
+
+
 const color = require("cli-color")
 const editjsonfile = require("edit-json-file")
 const input = require("input")
