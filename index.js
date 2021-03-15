@@ -33,7 +33,7 @@ const [,, ...args] = process.argv
 const app = async () => {
     if (!config.get("MasterKey")) {
         console.log(`
-${color.blueBright("Welcome")}, to epm setup
+${color.blueBright("Welcome")}, to upm setup
  You need to give me a master key
   To see, edit, remove passwords.
 
