@@ -1,20 +1,20 @@
 {
-  "name": "epm",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {},
-  "author": "senpai-10",
-  "bin": {
-    "epm": "./index.js"
-  },
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "cli-color": "^2.0.0",
-    "crypto": "^1.0.1",
-    "edit-json-file": "^1.5.0",
-    "input": "^1.0.1",
-    "node-cmd": "^4.0.0",
-    "table": "^6.0.7"
-  }
+    "name": "upm",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {},
+    "author": "senpai-10",
+    "bin": {
+        "upm": "./index.js"
+    },
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "cli-color": "^2.0.0",
+        "crypto": "^1.0.1",
+        "edit-json-file": "^1.5.0",
+        "input": "^1.0.1",
+        "node-cmd": "^4.0.0",
+        "table": "^6.0.7"
+    }
 }
