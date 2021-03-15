@@ -24,6 +24,7 @@ const ls     = require("./lib/commands/ls")
 const add    = require("./lib/commands/add")
 const remove = require("./lib/commands/remove")
 const help   = require("./lib/commands/help") 
+const change = require("./lib/commands/change")
 const backup = require("./lib/commands/backup")
 
 const [,, ...args] = process.argv
@@ -56,6 +57,7 @@ ${color.blueBright("Welcome")}, to epm setup
     add(args)    // add     command
     remove(args) // remove  command
     backup(args) // backup  command
+    change(args) // change  command
     help(args)   // help    command
 
 }
