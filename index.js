@@ -1,15 +1,5 @@
 #!/usr/bin/env node
 
-/* TODO
-
-change command
-- change (Username, 
-          Email, 
-          Password)
-
-*/
-
-
 const color = require("cli-color")
 const editjsonfile = require("edit-json-file")
 const input = require("input")
@@ -33,7 +23,7 @@ const [,, ...args] = process.argv
 const app = async () => {
     if (!config.get("MasterKey")) {
         console.log(`
-${color.blueBright("Welcome")}, to upm setup
+${color.blueBright("Welcome")}, to upm (uwu password manager) setup
  You need to give me a master key
   To see, edit, remove passwords.
 
@@ -52,13 +42,13 @@ ${color.blueBright("Welcome")}, to upm setup
         process.exit()
     }
 
-    Config(args) // config  command
-    ls(args)     // ls      command
-    add(args)    // add     command
-    remove(args) // remove  command
-    backup(args) // backup  command
-    change(args) // change  command
-    help(args)   // help    command
+    Config  (args)   // config  command
+    ls      (args)   // ls      command
+    add     (args)   // add     command
+    remove  (args)   // remove  command
+    backup  (args)   // backup  command
+    change  (args)   // change  command
+    help    (args)   // help    command
 
 }
 
