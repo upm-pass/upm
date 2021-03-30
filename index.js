@@ -1,15 +1,5 @@
 #!/usr/bin/env node
 
-/* TODO
-
-change command
-- change (Username, 
-          Email, 
-          Password)
-
-*/
-
-
 const color = require("cli-color")
 const editjsonfile = require("edit-json-file")
 const input = require("input")
@@ -19,16 +9,16 @@ const { ConfigPath, commands, options } = require("./lib/settings")
 let config = editjsonfile(ConfigPath, {autosave: true})
 
 // import commands
-const Config = require("./lib/commands/config")
-const ls     = require("./lib/commands/ls")
-const add    = require("./lib/commands/add")
-const remove = require("./lib/commands/remove")
-const help   = require("./lib/commands/help") 
-const change = require("./lib/commands/change")
-const backup = require("./lib/commands/backup")
+const Config  = require("./lib/commands/config")
+const ls      = require("./lib/commands/ls")
+const add     = require("./lib/commands/add")
+const remove  = require("./lib/commands/remove")
+const help    = require("./lib/commands/help") 
+const change  = require("./lib/commands/change")
+const backup  = require("./lib/commands/backup")
+const session = require("./lib/commands/session")
 
 const [,, ...args] = process.argv
-
 
 const app = async () => {
     if (!config.get("MasterKey")) {
@@ -52,13 +42,15 @@ ${color.blueBright("Welcome")}, to upm setup
         process.exit()
     }
 
-    Config(args) // config  command
-    ls(args)     // ls      command
-    add(args)    // add     command
-    remove(args) // remove  command
-    backup(args) // backup  command
-    change(args) // change  command
-    help(args)   // help    command
+    // upm commands
+    Config(args)
+    ls(args)
+    add(args)
+    remove(args)
+    backup(args)
+    change(args)
+    help(args)
+    session(args)
 
 }
 
