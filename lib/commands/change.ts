@@ -5,7 +5,7 @@ const { encrypt, decrypt } = require('../crpyto')
 const { ConfigPath, commands, options } = require("../settings")
 let config = editjsonfile(ConfigPath, {autosave: true})
 
-const generate = length => {
+const generate = (length: number) => {
     let char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%*=';
     var pass = '';
     
