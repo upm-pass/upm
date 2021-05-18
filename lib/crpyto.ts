@@ -1,5 +1,4 @@
 import editjsonfile from "edit-json-file";
-// const editjsonfile = require("edit-json-file")
 import crypto from "crypto";
 const username = require("os").userInfo().username
 const fs = require("fs")
