@@ -1,21 +1,10 @@
 import editjsonfile from "edit-json-file"
+import { generate } from "../generate";
 const color = require("cli-color")
 const input = require("input")
 const { encrypt, decrypt } = require('../crpyto')
 const { ConfigPath, commands, options } = require("../settings")
 let config = editjsonfile(ConfigPath, {autosave: true})
-
-const generate = (length: number) => {
-    let char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%*=';
-    var pass = '';
-    
-    for (var x = 0; x < length; x++) {
-        var i = Math.floor(Math.random() * char.length);
-        pass += char.charAt(i);
-    }
-
-    return pass
-}
 
 const main = async args => {
     let Domain = await input.text("Domain name:")
