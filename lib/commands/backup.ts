@@ -11,7 +11,7 @@ const backup = async args => {
 upm backup <full_destination_path>
             `)
         } else {
-            cmd.runSync(`mkdir -p ${args[1]} && cp -f ~/.upm ${args[1]}`)
+            cmd.runSync(`mkdir -p ${args[1]} && cp -f ~/.config/upm/.upm ${args[1]}`)
             cmd.runSync(`cp -f ~/.config/upm/secretkey ${args[1]}`)
         }
     }
